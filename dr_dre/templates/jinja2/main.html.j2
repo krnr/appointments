@@ -1,0 +1,96 @@
+{% extends "base.html.j2" %}
+
+{% block css%}
+{{ super() }}
+    <link href="{{ static('css/reset.css')}}" rel="stylesheet">
+    <link href="{{ static('css/schedule.css')}}" rel="stylesheet">
+{% endblock %}
+
+      {% block content %}
+
+<div class="cd-schedule loading">
+  <div class="timeline">
+    <ul>
+      {% for hour in range(8,17) %}
+      <li><span>{{hour}}:00</span></li>
+      <li><span>{{hour}}:30</span></li>
+      {% endfor%}
+    </ul>
+  </div>
+ 
+  <div class="events">
+    <ul>
+      <li class="events-group">
+        <div class="top-info"><span>Monday</span></div>
+ 
+        <ul>
+          <li class="single-event" data-start="09:00" data-end="09:30" data-content="event-abs-circuit" data-event="event-1">
+            <a href="#0">
+              <em class="event-name">Abs Circuit</em>
+            </a>
+          </li>
+ 
+          <!-- other events here -->
+        </ul>
+      </li>
+ 
+      <li class="events-group">
+        <div class="top-info"><span>Tuesday</span></div>
+ 
+        <ul>
+          <!-- events here -->
+        </ul>
+      </li>
+ 
+      <li class="events-group">
+        <div class="top-info"><span>Wednsday</span></div>
+ 
+        <ul>
+          <!-- events here -->
+        </ul>
+      </li>
+ 
+      <li class="events-group">
+        <div class="top-info"><span>Thursday</span></div>
+ 
+        <ul>
+          <!-- events here -->
+        </ul>
+      </li>
+ 
+      <li class="events-group">
+        <div class="top-info"><span>Friday</span></div>
+ 
+        <ul>
+          <!-- events here -->
+        </ul>
+      </li>
+ 
+    </ul>
+  </div>
+ 
+  <div class="event-modal">
+    <header class="header">
+      <div class="content">
+        <span class="event-date"></span>
+        <h3 class="event-name"></h3>
+      </div>
+ 
+      <div class="header-bg"></div>
+    </header>
+ 
+    <div class="body">
+      <div class="event-info"></div>
+      <div class="body-bg"></div>
+    </div>
+ 
+    <a href="#0" class="close">Close</a>
+  </div>
+</div>
+
+      {% endblock content %}
+
+{% block javascript %}
+{{ super() }}
+          <script src="{{ static('js/schedule.js')}}"></script>
+{% endblock %}

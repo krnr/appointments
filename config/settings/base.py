@@ -45,6 +45,7 @@ DJANGO_APPS = [
     'django.contrib.admin',
 ]
 THIRD_PARTY_APPS = [
+    'rest_framework',
     'crispy_forms',  # Form layouts
     'allauth',  # registration
     'allauth.account',  # registration
@@ -55,6 +56,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     # custom users app
     'dr_dre.users.apps.UsersConfig',
+    'dr_dre.appointments.apps.AppointmentsConfig',
     # Your stuff: custom apps go here
 ]
 
@@ -297,3 +299,28 @@ ADMIN_URL = r'^admin/'
 
 # Your common stuff: Below this line define 3rd party library settings
 # ------------------------------------------------------------------------------
+import datetime
+WORKING_HOURS = (
+    datetime.time(8, 0, 0),
+    datetime.time(17, 0, 0),
+)
+
+REST_FRAMEWORK = {
+    'PAGE_SIZE': 20,
+    'DATETIME_FORMAT': '%Y-%m-%dT%H:%M:%S%z',
+    'DEFAULT_RENDERER_CLASSES': (
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ),
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json'
+}

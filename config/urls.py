@@ -4,12 +4,19 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic import TemplateView
 from django.views import defaults as default_views
+from rest_framework import routers
 
 from dr_dre.appointments.views import main_view
+from dr_dre.appointments.viewsets import AppointmentViewSet
+
+
+router = routers.DefaultRouter()
+router.register(r'appointment', AppointmentViewSet)
 
 
 urlpatterns = [
     url(r'^$', main_view, name='home'),
+    url(r'^api/v1/', include(router.urls, namespace='api')),
     url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
 
     # Django Admin, use {% url 'admin:index' %}

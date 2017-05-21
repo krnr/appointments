@@ -22,6 +22,14 @@ def add_mins_to_time(time_str, mins):
     return added.time()
 
 
+class AppointmentQuerySet(models.QuerySet):
+    def get_for_period(self, range):
+        """
+        Return instances from the given range of dates
+        """
+        return self.filter(date__in=range).order_by('date', 'time_start')
+
+
 class Appointment(models.Model):
     """docstring for Appointment"""
     visitor = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True, null=True)
@@ -30,6 +38,8 @@ class Appointment(models.Model):
     time_start = models.TimeField(db_index=True)
     time_end = models.TimeField(blank=True, db_index=True)
     reason = models.TextField(default='Not stated')
+
+    objects = AppointmentQuerySet.as_manager()
 
     class Meta:
         unique_together = (

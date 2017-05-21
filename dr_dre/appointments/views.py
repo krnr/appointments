@@ -2,7 +2,7 @@ from datetime import date, timedelta
 
 from django.shortcuts import render
 
-# Create your views here.
+from .models import Appointment
 
 
 def get_week(date):
@@ -24,10 +24,13 @@ def get_week(date):
 
 def main_view(request):
     today = date.today()
+    all_week = list(get_week(today))
+    busy = Appointment.objects.get_for_period(all_week)
     return render(
         request, 
         'main.html.j2',
         {
-            'week': list(get_week(today)),
+            'week': all_week,
+            'appointments': busy,
         }
     )

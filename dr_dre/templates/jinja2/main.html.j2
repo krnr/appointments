@@ -2,91 +2,47 @@
 
 {% block css%}
 {{ super() }}
-    <link href="{{ static('css/reset.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
     <link href="{{ static('css/schedule.css')}}" rel="stylesheet">
 {% endblock %}
 
       {% block content %}
 
-<div class="cd-schedule loading">
-  <div class="timeline">
-    <ul>
-      {% for hour in range(8,17) %}
-      <li><span>{{hour}}:00</span></li>
-      <li><span>{{hour}}:30</span></li>
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      {% for day in week %}
+      <th>
+        <span class="day">{{ day.isoformat() }}</span>
+        <span class="long">{{ loop.cycle("Monday", "Tuesday", "Wendsday", "Thursday", "Friday") }}</span>
+        <span class="short">{{ loop.cycle("Mon", "Tue", "Wen", "Thu", "Fri") }}</span>
+      </th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+      {% for hour in range(8,16) %}
+    <tr>
+      <td class="hour" rowspan="2"><span>{{hour}}:00</span></td>
+      {% for day in week %}
+      <td class="frame" 
+          data-hour={{hour}} 
+          data-minutes="00"
+          data-day={{day}}></td>
+      {% endfor %}
+    </tr>
+    <tr>
+      {% for day in week %}
+      <td class="frame" 
+          data-hour={{hour}} 
+          data-minutes="30"
+          data-day={{day}}></td>
+      {% endfor %}
+    </tr>
       {% endfor%}
-    </ul>
-  </div>
- 
-  <div class="events">
-    <ul>
-      <li class="events-group">
-        <div class="top-info"><span>Monday</span></div>
- 
-        <ul>
-          <li class="single-event" data-start="09:00" data-end="09:30" data-content="event-abs-circuit" data-event="event-1">
-            <a href="#0">
-              <em class="event-name">Abs Circuit</em>
-            </a>
-          </li>
- 
-          <!-- other events here -->
-        </ul>
-      </li>
- 
-      <li class="events-group">
-        <div class="top-info"><span>Tuesday</span></div>
- 
-        <ul>
-          <!-- events here -->
-        </ul>
-      </li>
- 
-      <li class="events-group">
-        <div class="top-info"><span>Wednsday</span></div>
- 
-        <ul>
-          <!-- events here -->
-        </ul>
-      </li>
- 
-      <li class="events-group">
-        <div class="top-info"><span>Thursday</span></div>
- 
-        <ul>
-          <!-- events here -->
-        </ul>
-      </li>
- 
-      <li class="events-group">
-        <div class="top-info"><span>Friday</span></div>
- 
-        <ul>
-          <!-- events here -->
-        </ul>
-      </li>
- 
-    </ul>
-  </div>
- 
-  <div class="event-modal">
-    <header class="header">
-      <div class="content">
-        <span class="event-date"></span>
-        <h3 class="event-name"></h3>
-      </div>
- 
-      <div class="header-bg"></div>
-    </header>
- 
-    <div class="body">
-      <div class="event-info"></div>
-      <div class="body-bg"></div>
-    </div>
- 
-    <a href="#0" class="close">Close</a>
-  </div>
-</div>
+  </tbody>
+</table>
 
       {% endblock content %}
 

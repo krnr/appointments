@@ -48,5 +48,15 @@
 
 {% block javascript %}
 {{ super() }}
-          <script src="{{ static('js/schedule.js')}}"></script>
+<script src="{{ static('js/schedule.js')}}"></script>
+<script type="text/javascript">
+jQuery(document).ready(function($){
+
+{% for appt in appointments %}
+    book_frame('{{appt|safe}}');
+{% endfor %}
+
+});
+</script>
+
 {% endblock %}

@@ -28,3 +28,18 @@ class AppointmentSerializer(serializers.HyperlinkedModelSerializer):
         if not worktime:
             raise serializers.ValidationError(TIME_ERROR_MESSAGE)
         return data
+
+
+class FrameSerializer(serializers.HyperlinkedModelSerializer):
+    hour_start = serializers.SerializerMethodField()
+    min_start = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Appointment
+        fields = ('date', 'hour_start', 'min_start')
+
+    def get_hour_start(self, obj):
+        return obj.time_start.hour
+
+    def get_min_start(self, obj):
+        return "%02d" % obj.time_start.minute

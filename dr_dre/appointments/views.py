@@ -1,8 +1,11 @@
+import json
+
 from datetime import date, timedelta
 
 from django.shortcuts import render
 
 from .models import Appointment
+from .serializers import FrameSerializer
 
 
 def get_week(date):
@@ -26,11 +29,12 @@ def main_view(request):
     today = date.today()
     all_week = list(get_week(today))
     busy = Appointment.objects.get_for_period(all_week)
+    serializer = FrameSerializer(busy, many=True)
     return render(
         request, 
         'main.html.j2',
         {
             'week': all_week,
-            'appointments': busy,
+            'appointments': [json.dumps(dict(data)) for data in serializer.data],
         }
     )

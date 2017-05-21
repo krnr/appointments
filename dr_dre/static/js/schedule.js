@@ -20,7 +20,7 @@ var create_appt = function(data){
             console.log("Response " + JSON.stringify(data));
         }
     )
-}
+};
 
 $('.frame').click(function(){
     create_appt(this.dataset);
@@ -28,3 +28,16 @@ $('.frame').click(function(){
 
 
 });
+
+var book_frame = function(data){
+    var data = JSON.parse(data);
+    var day_selector = '[data-day="' + data["date"] + '"]';
+    var hour_selector = '[data-hour="' + data["hour_start"] + '"]';
+    var min_selector = '[data-minutes="' + data["min_start"] + '"]';
+    var selector = '.frame' + day_selector + hour_selector + min_selector;
+    console.log(selector);
+    var found = $(selector);
+    console.dir(found);
+    found.removeClass('frame');
+    found.addClass('booked');
+};

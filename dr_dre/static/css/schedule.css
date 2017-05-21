@@ -18,6 +18,9 @@ table thead tr th:first-child {
 table thead tr th:last-child {
   border-radius: 0 3px  0 0;
 }
+table tr .booked {
+  background: #626E7E;
+}
 table thead tr th .day {
   display: block;
   font-size: 1.2em;

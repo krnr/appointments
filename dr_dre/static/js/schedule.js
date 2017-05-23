@@ -6,12 +6,7 @@ jQuery(document).ready(function($){
         $.ajax({
             url: ENDPOINT,
             type: "POST",
-            data: {
-                "date": data['day'],
-                "time_start": data['hour'] + ":" + data['minutes'],
-                "non_recurring": "Anon",
-                "reason": "I broke a leg"
-            },
+            data: data,
             dataType: "json",
             success: function (data) {
                 book_frame(JSON.stringify(data));
@@ -23,7 +18,43 @@ jQuery(document).ready(function($){
     };
 
     $('.frame').click(function(){
-        create_appt(this.dataset);
+        $('#apptModal').modal('show');
+        $('input#day').val(this.dataset['day']);
+        $('input#hour').val(this.dataset['hour']);
+        $('input#minutes').val(this.dataset['minutes']);
+    });
+
+    $('#userForm').submit(function(event) {
+        event.preventDefault();
+        $('#apptModal').modal('hide');
+        var $form = $(this),
+            day = $('input#day').val(),
+            hour = $('input#hour').val(),
+            min = $('input#minutes').val(),
+            who = $form.find('input#name').val(),
+            reason = $form.find('input#reason').val();
+
+        create_appt({
+            "date": day,
+            "time_start": hour + ":" + min,
+            "non_recurring": who,
+            "reason": reason
+        });
+    });
+
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+
+    var csrftoken = $("[name=csrfmiddlewaretoken]").val();
+
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
     });
 
 });
@@ -34,9 +65,7 @@ var book_frame = function(data){
     var hour_selector = '[data-hour="' + data["hour_start"] + '"]';
     var min_selector = '[data-minutes="' + data["min_start"] + '"]';
     var selector = '.frame' + day_selector + hour_selector + min_selector;
-    console.log(selector);
     var found = $(selector);
-    console.dir(found);
     found.removeClass('frame');
     found.addClass('booked');
 };

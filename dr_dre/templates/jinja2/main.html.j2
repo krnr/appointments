@@ -29,7 +29,8 @@
       <td class="frame" 
           data-hour={{hour}} 
           data-minutes="00"
-          data-day={{day}}></td>
+          data-day={{day}}
+          data-toggle="modal" data-target="#myModal"></td>
       {% endfor %}
     </tr>
     <tr>
@@ -37,7 +38,8 @@
       <td class="frame" 
           data-hour={{hour}} 
           data-minutes="30"
-          data-day={{day}}></td>
+          data-day={{day}}
+          data-toggle="modal" data-target="#myModal"></td>
       {% endfor %}
     </tr>
       {% endfor%}
@@ -58,5 +60,6 @@ jQuery(document).ready(function($){
 
 });
 </script>
-
 {% endblock %}
+
+{% include "modal.html.j2" %}

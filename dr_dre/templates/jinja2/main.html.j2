@@ -7,7 +7,6 @@
 {% endblock %}
 
       {% block content %}
-
 <table>
   <thead>
     <tr>
@@ -26,7 +25,7 @@
     <tr>
       <td class="hour" rowspan="2"><span>{{hour}}:00</span></td>
       {% for day in week %}
-      <td {% if today<=day or (today==day and now.hour < hour)%}
+      <td {% if today < day or (today==day and now.hour < hour)%}
           class="frame" data-toggle="modal" data-target="#myModal"
       {%else%}
           class="past"
@@ -38,14 +37,14 @@
     </tr>
     <tr>
       {% for day in week %}
-      <td {% if today<=day or (today==day and now.hour < hour)%}
+      <td {% if today < day or (today==day and now.hour < hour)%}
           class="frame" data-toggle="modal" data-target="#myModal"
       {%else%}
           class="past"
       {%endif%} 
           data-hour={{hour}} 
           data-minutes="30"
-          data-day={{day}} ></td>
+          data-day={{day}}></td>
       {% endfor %}
     </tr>
       {% endfor%}

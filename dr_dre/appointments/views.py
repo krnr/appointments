@@ -3,6 +3,7 @@ import json
 from datetime import date, timedelta
 
 from django.shortcuts import render
+from django.utils import timezone
 
 from .models import Appointment
 from .serializers import FrameSerializer
@@ -34,6 +35,8 @@ def main_view(request):
         request, 
         'main.html.j2',
         {
+            'now': timezone.now(),
+            'today': today,
             'week': all_week,
             'appointments': [json.dumps(dict(data)) for data in serializer.data],
         }

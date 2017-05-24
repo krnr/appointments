@@ -64,8 +64,9 @@ var book_frame = function(data){
     var day_selector = '[data-day="' + data["date"] + '"]';
     var hour_selector = '[data-hour="' + data["hour_start"] + '"]';
     var min_selector = '[data-minutes="' + data["min_start"] + '"]';
-    var selector = '.frame' + day_selector + hour_selector + min_selector;
+    var selector = 'td' + day_selector + hour_selector + min_selector;
     var found = $(selector);
     found.removeClass('frame');
+    found.removeClass('past');
     found.addClass('booked');
 };

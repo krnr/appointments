@@ -26,20 +26,26 @@
     <tr>
       <td class="hour" rowspan="2"><span>{{hour}}:00</span></td>
       {% for day in week %}
-      <td class="frame" 
+      <td {% if today<=day or (today==day and now.hour < hour)%}
+          class="frame" data-toggle="modal" data-target="#myModal"
+      {%else%}
+          class="past"
+      {%endif%}
           data-hour={{hour}} 
           data-minutes="00"
-          data-day={{day}}
-          data-toggle="modal" data-target="#myModal"></td>
+          data-day={{day}}></td>
       {% endfor %}
     </tr>
     <tr>
       {% for day in week %}
-      <td class="frame" 
+      <td {% if today<=day or (today==day and now.hour < hour)%}
+          class="frame" data-toggle="modal" data-target="#myModal"
+      {%else%}
+          class="past"
+      {%endif%} 
           data-hour={{hour}} 
           data-minutes="30"
-          data-day={{day}}
-          data-toggle="modal" data-target="#myModal"></td>
+          data-day={{day}} ></td>
       {% endfor %}
     </tr>
       {% endfor%}
@@ -62,4 +68,4 @@ jQuery(document).ready(function($){
 </script>
 {% endblock %}
 
-{% include "modal.html.j2" %}
+{% include 'modal.html.j2' %}

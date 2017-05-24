@@ -35,7 +35,7 @@ def main_view(request):
         request, 
         'main.html.j2',
         {
-            'now': timezone.now(),
+            'now': timezone.localtime(timezone.now()),
             'today': today,
             'week': all_week,
             'appointments': [json.dumps(dict(data)) for data in serializer.data],
